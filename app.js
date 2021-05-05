@@ -2,12 +2,25 @@ const express = require('express')
 const app = express()
 const morgan = require('morgan')
 
+
 const productRoutes = require('./api/routes/products')
 const orderRoutes = require('./api/routes/orders')
 
 app.use(morgan('dev'))
 app.use(express.json()) // this is to parse the body as json
 
+// This is to avoid CORS errors. This can restrict or allow certain source websites, or certain request types
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
+
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Methods', 'PUT,  POST, PATCH, DELETE, GET')
+    return res.status(200).json({})
+  }
+
+  next()
+})
 app.use('/products', productRoutes) // it forwards all the /products requests to localhost:3000/products
 app.use('/orders', orderRoutes) // it forwards all the /orders requests to localhost:3000/orders
 
