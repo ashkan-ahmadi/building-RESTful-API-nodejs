@@ -1,10 +1,16 @@
 const express = require('express')
 const app = express()
 const morgan = require('morgan')
+const mongoose = require('mongoose')
 
 
 const productRoutes = require('./api/routes/products')
 const orderRoutes = require('./api/routes/orders')
+
+mongoose.connect(
+  'mongodb+srv://mainUser:' +
+  process.env.MONGO_ATLAS_PW +
+  '@cluster0.fzcxu.mongodb.net/RESTAPI?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }) // password inside nodemon.json
 
 app.use(morgan('dev'))
 app.use(express.json()) // this is to parse the body as json
