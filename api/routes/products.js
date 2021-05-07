@@ -56,7 +56,7 @@ router.post('/', (req, res, next) => {
           _id: result._id,
           request: {
             type: 'GET',
-            url: `http://localhost:3000/products/${result._id}`
+            url: `http://${req.get('host')}/products/${result._id}`
           }
         }
       })
@@ -84,7 +84,7 @@ router.get('/:productId', (req, res, next) => {
           product: doc,
           request: {
             type: 'GET',
-            url: `http://localhost:3000/products/${doc._id}`
+            url: `http://${req.get('host')}/products/${doc._id}`
           }
         })
       } else {
@@ -133,7 +133,7 @@ router.patch('/:productId', (req, res, next) => {
         message: 'Product updated successfully',
         request: {
           type: 'GET',
-          url: `http://localhost:3000/products/${id}`
+          url: `http://${req.get('host')}/products/${id}`
         }
       })
     })
@@ -155,8 +155,8 @@ router.delete('/:productId', (req, res, next) => {
         message: 'Product deleted successfully',
         request: {
           type: 'POST',
-          descrption: 'You can add new products by sending a POST request to the url',
-          url: 'http://localhost:3000/products',
+          descrption: 'You can add new products by sending a POST request to the URL using the body',
+          URL: `http://${req.get('host')}:3000/products`,
           body: {
             name: 'string & required',
             price: 'number & required'
