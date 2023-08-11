@@ -8,6 +8,7 @@ router.get('/', (req, res) => {
   Order
     .find()
     .select('_id quantity productId')
+    .populate('productId') // this is similar to foreign key. it shows the product's data
     .exec()
     .then(docs => {
       console.log(docs)
